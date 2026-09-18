@@ -1,0 +1,117 @@
+import random
+
+carton = [[], [], [], [], []]
+
+numeros = random.sample(range(1, 51), 25)
+
+contador = 0
+
+for fila in range(5):
+    for columna in range(5):
+        carton[fila].append(numeros[contador])
+        contador += 1
+
+
+print("CARTÓN DE BINGO")
+print("-------------------------")
+
+for fila in carton:
+    for elemento in fila:
+        print(f"{elemento:2}", end="  ")
+    print()
+
+
+
+# SORTEO
+
+sorteados = []
+cantidad_sorteados = 0
+bingo = False
+
+while bingo == False:
+
+    numero = random.randint(1, 50)
+
+    # Comprobar que el número no haya salido antes
+    if numero not in sorteados:
+
+        sorteados.append(numero)
+        cantidad_sorteados += 1
+
+        print()
+        print(f"Número sorteado: {numero}")
+
+    
+        encontrado = False
+
+        for fila in range(5):
+            for columna in range(5):
+
+                if carton[fila][columna] == numero:
+                    carton[fila][columna] = "X"
+                    encontrado = True
+
+      
+        if encontrado == True:
+
+            print()
+            print("Número encontrado en el cartón.")
+
+            for fila in carton:
+                for elemento in fila:
+                    print(f"{elemento:2}", end="  ")
+                print()
+
+        
+            for fila in range(5):
+
+                completa = True
+
+                for columna in range(5):
+
+                    if carton[fila][columna] != "X":
+                        completa = False
+
+                if completa == True:
+                    bingo = True
+
+        
+            for columna in range(5):
+
+                completa = True
+
+                for fila in range(5):
+
+                    if carton[fila][columna] != "X":
+                        completa = False
+
+                if completa == True:
+                    bingo = True
+
+          
+            completa = True
+
+            for posicion in range(5):
+
+                if carton[posicion][posicion] != "X":
+                    completa = False
+
+            if completa == True:
+                bingo = True
+
+
+            completa = True
+
+            for posicion in range(5):
+
+                if carton[posicion][4 - posicion] != "X":
+                    completa = False
+
+            if completa == True:
+                bingo = True
+
+
+
+print()
+print("🎉 ¡BINGO! 🎉")
+print(f"Se sortearon {cantidad_sorteados} números en total.")
